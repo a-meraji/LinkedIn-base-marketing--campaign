@@ -1,0 +1,130 @@
+{% extends 'scraper/base.html' %}
+{% load static %}
+
+{% block title %}Email Campaign - LinkedIn Lead Gen{% endblock %}
+
+{% block content %}
+<div class="page-container">
+    <div class="page-header">
+        <h1><i class="fas fa-envelope"></i> Email Outreach Campaign</h1>
+        <p class="subtitle">Send automated emails to all pending contacts from Google Sheets</p>
+    </div>
+
+    <div class="info-card">
+        <div class="info-icon"><i class="fas fa-info-circle"></i></div>
+        <div class="info-content">
+            <h3>How Email Campaigns Work</h3>
+            <ul>
+                <li>Reads all contacts with <code>email_status = "Pending"</code> from Google Sheets</li>
+                <li>Iterates through sender sequence from "Senders Pool" sheet</li>
+                <li>Each sender has unique resume and subject line</li>
+                <li>Rate limiting applied: <strong>30 emails per sender per 24 hours</strong></li>
+                <li>Status updated in real-time to Google Sheets</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="form-card">
+        <form id="emailCampaignForm" class="modern-form">
+            <!-- Campaign Info -->
+            <div class="campaign-info">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Pending Contacts</span>
+                        <span class="info-value" id="pendingEmailCount">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Active Senders</span>
+                        <span class="info-value" id="activeSenders">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Daily Limit</span>
+                        <span class="info-value">30/sender</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Confirmation -->
+            <div class="confirmation-box">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="confirmEmail" required />
+                    <span>I confirm that I want to start the email campaign. This will send emails to all pending contacts.</span>
+                </label>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary btn-lg" id="submitBtn" disabled>
+                <span class="btn-icon"><i class="fas fa-rocket"></i></span>
+                Start Email Campaign
+            </button>
+
+            <button type="button" class="btn btn-secondary" id="checkPendingBtn">
+                <span class="btn-icon"><i class="fas fa-sync-alt"></i></span>
+                Check Pending Contacts
+            </button>
+        </form>
+
+        <!-- Progress Section -->
+        <div class="progress-section" id="progressSection" style="display: none;">
+            <div class="progress-header">
+                <h3>Email Campaign Running</h3>
+                <p id="progressStatus">Initializing campaign...</p>
+            </div>
+            <div class="progress-bar-wrapper">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <div class="progress-details">
+                <div class="detail-item">
+                    <span class="detail-label">Task ID:</span>
+                    <span class="detail-value" id="taskId">-</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Status:</span>
+                    <span class="detail-value" id="taskStatus">-</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Progress:</span>
+                    <span class="detail-value" id="campaignProgress">-</span>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button type="button" class="btn btn-secondary" id="viewTaskBtn">
+                    View in Task Tracker
+                </button>
+                <button type="button" class="btn btn-outline" id="openSheetsBtn">
+                    <span class="btn-icon"><i class="fas fa-table"></i></span>
+                    Open Google Sheets
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Campaign Tips -->
+    <div class="tips-card">
+        <h3><i class="fas fa-lightbulb"></i> Campaign Tips</h3>
+        <div class="tips-grid">
+            <div class="tip-item">
+                <span class="tip-icon"><i class="fas fa-check-circle"></i></span>
+                <p>Ensure your "Senders Pool" sheet is properly configured with valid email credentials</p>
+            </div>
+            <div class="tip-item">
+                <span class="tip-icon"><i class="fas fa-check-circle"></i></span>
+                <p>Use Gmail App Passwords for authentication (not regular passwords)</p>
+            </div>
+            <div class="tip-item">
+                <span class="tip-icon"><i class="fas fa-check-circle"></i></span>
+                <p>Each sender will be used sequentially for each target contact</p>
+            </div>
+            <div class="tip-item">
+                <span class="tip-icon"><i class="fas fa-check-circle"></i></span>
+                <p>Campaign will automatically skip rate-limited senders</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'scraper/js/email_campaign.js' %}"></script>
+{% endblock %}
+

@@ -1,0 +1,131 @@
+{% extends 'scraper/base.html' %}
+{% load static %}
+
+{% block title %}WhatsApp Campaign - LinkedIn Lead Gen{% endblock %}
+
+{% block content %}
+<div class="page-container">
+    <div class="page-header">
+        <h1><i class="fab fa-whatsapp"></i> WhatsApp Outreach Campaign</h1>
+        <p class="subtitle">Send automated WhatsApp messages to all pending contacts via Inboxino</p>
+    </div>
+
+    <div class="info-card">
+        <div class="info-icon"><i class="fas fa-info-circle"></i></div>
+        <div class="info-content">
+            <h3>How WhatsApp Campaigns Work</h3>
+            <ul>
+                <li>Reads all contacts with <code>whatsapp_status = "Pending"</code> from Google Sheets</li>
+                <li>Iterates through WhatsApp sender sequence from "Senders Pool"</li>
+                <li>Each sender uses unique resume and Inboxino API key</li>
+                <li>Rate limiting applied: <strong>200 messages per sender per 24 hours</strong></li>
+                <li>Messages sent via Inboxino API with PDF attachments</li>
+                <li>Status updated in real-time to Google Sheets</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="form-card">
+        <form id="whatsappCampaignForm" class="modern-form">
+            <!-- Campaign Info -->
+            <div class="campaign-info">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Pending Contacts</span>
+                        <span class="info-value" id="pendingWhatsAppCount">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Active Senders</span>
+                        <span class="info-value" id="activeSenders">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Daily Limit</span>
+                        <span class="info-value">200/sender</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Confirmation -->
+            <div class="confirmation-box">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="confirmWhatsApp" required />
+                    <span>I confirm that I want to start the WhatsApp campaign. This will send messages to all pending contacts.</span>
+                </label>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary btn-lg" id="submitBtn" disabled>
+                <span class="btn-icon"><i class="fas fa-rocket"></i></span>
+                Start WhatsApp Campaign
+            </button>
+
+            <button type="button" class="btn btn-secondary" id="checkPendingBtn">
+                <span class="btn-icon"><i class="fas fa-sync-alt"></i></span>
+                Check Pending Contacts
+            </button>
+        </form>
+
+        <!-- Progress Section -->
+        <div class="progress-section" id="progressSection" style="display: none;">
+            <div class="progress-header">
+                <h3>WhatsApp Campaign Running</h3>
+                <p id="progressStatus">Initializing campaign...</p>
+            </div>
+            <div class="progress-bar-wrapper">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <div class="progress-details">
+                <div class="detail-item">
+                    <span class="detail-label">Task ID:</span>
+                    <span class="detail-value" id="taskId">-</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Status:</span>
+                    <span class="detail-value" id="taskStatus">-</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Progress:</span>
+                    <span class="detail-value" id="campaignProgress">-</span>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button type="button" class="btn btn-secondary" id="viewTaskBtn">
+                    View in Task Tracker
+                </button>
+                <button type="button" class="btn btn-outline" id="openSheetsBtn">
+                    <span class="btn-icon"><i class="fas fa-table"></i></span>
+                    Open Google Sheets
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Campaign Tips -->
+    <div class="tips-card">
+        <h3><i class="fas fa-lightbulb"></i> Campaign Tips</h3>
+        <div class="tips-grid">
+            <div class="tip-item">
+                <span class="tip-icon"><i class="fas fa-check-circle"></i></span>
+                <p>Ensure your "Senders Pool" sheet has valid Inboxino API keys</p>
+            </div>
+            <div class="tip-item">
+                <span class="tip-icon"><i class="fas fa-check-circle"></i></span>
+                <p>Resume files must be in PDF format and in project root</p>
+            </div>
+            <div class="tip-item">
+                <span class="tip-icon"><i class="fas fa-check-circle"></i></span>
+                <p>Phone numbers are automatically formatted with country codes</p>
+            </div>
+            <div class="tip-item">
+                <span class="tip-icon"><i class="fas fa-check-circle"></i></span>
+                <p>WhatsApp campaigns have higher daily limits than email (200 vs 30)</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'scraper/js/whatsapp_campaign.js' %}"></script>
+{% endblock %}
+

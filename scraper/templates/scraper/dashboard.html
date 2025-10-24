@@ -1,0 +1,102 @@
+{% extends 'scraper/base.html' %}
+{% load static %}
+
+{% block title %}Dashboard - LinkedIn Lead Gen{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="page-header">
+        <h1>Dashboard</h1>
+        <p class="subtitle">Monitor your lead generation campaigns</p>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                <span><i class="fas fa-search"></i></span>
+            </div>
+            <div class="stat-content">
+                <h3 id="activeScraping">0</h3>
+                <p>Active Scraping Tasks</p>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                <span><i class="fas fa-envelope"></i></span>
+            </div>
+            <div class="stat-content">
+                <h3 id="activeEmail">0</h3>
+                <p>Email Campaigns</p>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                <span><i class="fab fa-whatsapp"></i></span>
+            </div>
+            <div class="stat-content">
+                <h3 id="activeWhatsApp">0</h3>
+                <p>WhatsApp Campaigns</p>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                <span><i class="fas fa-check-circle"></i></span>
+            </div>
+            <div class="stat-content">
+                <h3 id="completedTasks">0</h3>
+                <p>Completed Tasks</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+        <h2>Quick Actions</h2>
+        <div class="action-grid">
+            <a href="{% url 'scraping-page' %}" class="action-card">
+                <div class="action-icon"><i class="fas fa-search"></i></div>
+                <h3>Start Scraping</h3>
+                <p>Scrape LinkedIn jobs and enrich company data</p>
+            </a>
+
+            <a href="{% url 'email-campaign-page' %}" class="action-card">
+                <div class="action-icon"><i class="fas fa-envelope"></i></div>
+                <h3>Launch Email Campaign</h3>
+                <p>Send automated emails to pending contacts</p>
+            </a>
+
+            <a href="{% url 'whatsapp-campaign-page' %}" class="action-card">
+                <div class="action-icon"><i class="fab fa-whatsapp"></i></div>
+                <h3>Launch WhatsApp Campaign</h3>
+                <p>Send WhatsApp messages to pending contacts</p>
+            </a>
+
+            <a href="{% url 'task-tracker-page' %}" class="action-card">
+                <div class="action-icon"><i class="fas fa-tasks"></i></div>
+                <h3>View All Tasks</h3>
+                <p>Monitor and track all running tasks</p>
+            </a>
+        </div>
+    </div>
+
+    <!-- Recent Tasks -->
+    <div class="recent-tasks">
+        <h2>Recent Tasks</h2>
+        <div id="recentTasksList" class="tasks-list">
+            <div class="empty-state">
+                <span class="empty-icon"><i class="fas fa-clipboard-list"></i></span>
+                <p>No recent tasks found</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'scraper/js/dashboard.js' %}"></script>
+{% endblock %}
+

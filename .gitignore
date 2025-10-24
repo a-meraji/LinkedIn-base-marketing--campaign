@@ -1,0 +1,109 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+/media
+/staticfiles
+/static_root
+
+# Environment variables (IMPORTANT: Keep .env.example for template)
+.env
+.env.*
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Credentials and Keys (NEVER commit these!)
+credentials.json
+*-credentials.json
+service-account*.json
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Resume files - Ignore all PDFs except in specific locations
+*.pdf
+!docs/*.pdf
+!templates/*.pdf
+
+# Media uploads (user-generated content)
+/media/*
+!media/.gitkeep
+/media/resumes/*
+!media/resumes/.gitkeep
+
+# Logs
+*.log
+logs/
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+.tox/
+
+# Testing
+.pytest_cache/
+.cache
+
+# Backup files
+*.bak
+*.backup
+
+# OS generated files
+Thumbs.db
+Desktop.ini
+.Spotlight-V100
+.Trashes
+
+# Project specific
+index.html.old
+*.old
+*.tmp
+
+# Deployment and production files
+/staticfiles.json
+*.sock
+*.pid
+
+# Backup and temporary files
+*_backup
+*_old
+*.backup
+*.bak.sql
